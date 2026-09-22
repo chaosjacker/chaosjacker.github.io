@@ -13,6 +13,10 @@
         }
         body {
             background-color: #fcfaff;
+            background-image: url("HSVIr_laEAAZJzU.jpg");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             color: #333;
             padding: 16px;
             max-width: 1024px;
@@ -207,7 +211,7 @@
     <div class="profile-card">
         <!-- 替换成你自己的横幅图片链接 -->
         <img class="banner-img"
-             src="https://images.unsplash.com/photo-1557682250-33bd709cbe85?w=1200&q=80"
+             src="HPgmyWKb0AAfC8L.jpg"
              alt="banner">
         <div class="profile-info">
             <h2 id="username">加载中…</h2>
@@ -291,7 +295,7 @@ async function loadPage() {
         const userRes = await fetch(`https://api.github.com/users/${GH_USER}`);
         const user = await userRes.json();
         document.getElementById("username").innerText = user.name || user.login;
-        document.getElementById("bio").innerText = user.bio || "这个人很懒，什么都没写～";
+        document.getElementById("bio").innerText = user.bio || "这个人很懒，什么都没写～真的";
         document.getElementById("repo-count").innerText = user.public_repos;
         document.getElementById("follower-count").innerText = user.followers;
 
