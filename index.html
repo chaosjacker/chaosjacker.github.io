@@ -171,7 +171,7 @@ body{
         <img class="avatar" src="AI_1787483789040.png" alt="头像">
         <div class="username">chaosjacker</div>
         <div class="bio" id="bio">加载简介...</div>
-        <div class="tag-group" id="tagGroup">
+        <div class="tag-group">
             <span class="tag">前端</span>
             <span class="tag">GitHub</span>
             <span class="tag">ACG</span>
@@ -205,8 +205,6 @@ body{
 
 <script>
 const USER = "chaosjacker";
-// 使用代理解决跨域
-const PROXY = "https://mirror.ghproxy.com/";
 const langColorMap = {
     HTML:"#e34c26",
     CSS:"#563d7c",
@@ -220,12 +218,17 @@ const langColorMap = {
 let allRepos = [];
 let lastPushDate = null;
 
-// 获取用户信息
+// 讀取使用者資訊
 async function getUserInfo(){
     try{
-        const res = await fetch(`${PROXY}https://api.github.com/users/${USER}`);
+        const res = await fetch(`https://api.github.com/users/${USER}`);
         const data = await res.json();
         document.getElementById("bio").innerText = data.bio || "暂无个人简介";
         document.getElementById("followerNum").innerText = data.followers;
-    }catch(e){
-        d
+    }catch(err){
+        document.getElementById("bio").innerText = "資料載入失敗";
+    }
+}
+
+// 讀取倉庫列表
+async 
