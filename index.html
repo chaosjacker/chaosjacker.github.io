@@ -205,6 +205,8 @@ body{
 
 <script>
 const USER = "chaosjacker";
+// 使用代理解决跨域
+const PROXY = "https://ghproxy.homeboyc.cn/";
 const langColorMap = {
     HTML:"#e34c26",
     CSS:"#563d7c",
@@ -220,12 +222,10 @@ let lastPushDate = null;
 
 // 获取用户信息
 async function getUserInfo(){
-    const res = await fetch(`https://api.github.com/users/${USER}`);
-    const data = await res.json();
-    document.getElementById("bio").innerText = data.bio || "暂无个人简介";
-    document.getElementById("followerNum").innerText = data.followers;
-}
-
-// 获取仓库
-async function getRepos(){
-    const res = await fetch(`https://api.github.com/users/${USER}/repos?per_p
+    try{
+        const res = await fetch(`${PROXY}https://api.github.com/users/${USER}`);
+        const data = await res.json();
+        document.getElementById("bio").innerText = data.bio || "暂无个人简介";
+        document.getElementById("followerNum").innerText = data.followers;
+    }catch(e){
+        d
