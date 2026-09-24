@@ -243,4 +243,153 @@ body{
 <!-- 顶部用户信息卡片 -->
 <div class="profile-card">
     <div class="avatar-wrap">
+        <img class="avatar" src="AI_1787483789040.png" alt="头像">
+     </div>
+     <div class="username">chaosjacker</div>
+     <div class="bio" id="bio">ACG爱好者 | 前端摸鱼中</div>
+     <div class="tag-group">
+         <span class="tag">前端</span>
+         <span class="tag">GitHub</span>
+         <span class="tag">ACG</span>
+         <span class="tag">JavaScript</span>
+     </div>
+ </div>
+ <!-- 独立横幅卡片 -->
+ <div class="banner-card">
+     <img class="banner" src="AI_1790003503497.png" alt="横幅">
+ </div>
+ <!-- 三个统计卡片 -->
+ <div class="row-3">
+     <div class="stat-card">
+         <h3>摸鱼状态</h3>
+         <div class="stat-value" id="lastCommitTime">0时0分0秒</div>
+         <div class="stat-desc" id="lastCommitDesc">最后一次提交：加载中...</div>
+     </div>
+     <div class="stat-card">
+         <h3>GitHub 概览</h3>
+         <div class="gh-grid">
+             <div>
+                 <div class="num" id="repoNum">--</div>
+                 <div class="label">仓库</div>
+             </div>
+             <div>
+                 <div class="num" id="starNum">--</div>
+                 <div class="label">Star</div>
+             </div>
+             <div>
+                 <div class="num" id="followerNum">--</div>
+                 <div class="label">关注者</div>
+             </div>
+         </div>
+         <div class="gh-tip">数据来自 GitHub API</div>
+     </div>
+     <div class="stat-card">
+         <h3>常用语言</h3>
+         <div class="lang-row">
+             <div class="lang-name">JavaScript</div>
+             <div class="lang-bar"><div class="lang-fill" style="width:50%;background:#f1e05a"></div></div>
+             <div class="lang-percent">50%</div>
+         </div>
+         <div class="lang-row">
+             <div class="lang-name">CSS</div>
+             <div class="lang-bar"><div class="lang-fill" style="width:30%;background:#563d7c"></div></div>
+             <div class="lang-percent">30%</div>
+         </div>
+         <div class="lang-row">
+             <div class="lang-name">HTML</div>
+             <div class="lang-bar"><div class="lang-fill" style="width:20%;background:#e34c26"></div></div>
+             <div class="lang-percent">20%</div>
+         </div>
+     </div>
+ </div>
+ <!-- 仓库动态表格 -->
+ <div class="repo-card">
+     <h3>仓库动态 <span style="font-size:12px;color:#888">更新中...</span></h3>
+     <div class="repo-table-head">
+         <div>仓库</div>
+         <div>语言</div>
+         <div>Star</div>
+         <div>最近提交</div>
+     </div>
+     <div id="repoListBox">
+         <div class="repo-row">
+             <div class="repo-name"><a href="https://github.com/chaosjacker" target="_blank">加载仓库列表...</a></div>
+             <div>-</div>
+             <div>-</div>
+             <div>-</div>
+         </div>
+     </div>
+ </div>
+ <script>
+ const USER = "chaosjacker";
+ let lastCommitDate = new Date("2026-09-24T21:00:00+08:00");
+ let timerInterval = null;
+ function startTimer(){
+     if(timerInterval) clearInterval(timerInterval);
+     function update(){
+         const sec = Math.floor((Date.now() - lastCommitDate.getTime()) / 1000);
+         const d = Math.floor(sec / 86400);
+         const h = Math.floor((sec % 86400) / 3600);
+         const m = Math.floor((sec % 3600) / 60);
+         const s = sec % 60;
+         let text = "";
+         if(d>0) text += d + "天";
+         text += h + "时" + m + "分" + s + "秒";
+         document.getElementById("lastCommitTime").innerText = text;
+     }
+     update();
+     timerInterval = setInterval(update, 1000);
+ }
+ startTimer();
+ async function autoFetchGithubData(){
+     try{
+         const controller = new AbortController();
+         const timeout = setTimeout(()=>controller.abort(), 10000);
+         const userRes = await fetch("https://api.github.com/users/" + USER, {signal: controller.signal});
+         const userData = await userRes.json();
+         document.getElementById("bio").innerText = userData.bio || "ACG爱好者 | 前端摸鱼中";
+         document.getElementById("repoNum").innerText = userData.public_repos;
+         document.getElementById("followerNum").innerText = userData.followers;
+         const repoRes = await fetch("https://api.github.com/users/" + USER + "/repos?per_page=100&sort=pushed", {signal: controller.signal});
+         const repos = await repoRes.json();
+         let totalStar = 0;
+         repos.forEach(r => totalStar += r.stargazers_count);
+         document.getElementById("starNum").innerText = totalStar;
+         if(repos[0]?.pushed_at){
+             lastCommitDate = new Date(repos[0].pushed_at);
+             startTimer();
+             const dateStr = new Date(repos[0].pushed_at).toLocaleString();
+             document.getElementById("lastCommitDesc").innerText = "最后一次提交：" + dateStr;
+         }
+         let repoHtml = "";
+         repos.slice(0,5).forEach(r=>{
+             const pushDate = new Date(r.pushed_at).toLocaleDateString();
+             repoHtml += `
+             <div class="repo-row">
+                 <div class="repo-name"><a href="${r.html_url}" target="_blank">${r.name}</a></div>
+                 <div>${r.language || "-"}</div>
+                 <div>⭐${r.stargazers_count}</div>
+                 <div>${pushDate}</div>
+             </div>`;
+         });
+         document.getElementById("repoListBox").innerHTML = repoHtml;
+         clearTimeout(timeout);
+     }catch(e){
+         document.getElementById("repoNum").innerText = "12";
+         document.getElementById("starNum").innerText = "34";
+         document.getElementById("followerNum").innerText = "5";
+         document.getElementById("lastCommitDesc").innerText = "最后一次提交：2026-09-24 21:00";
+         document.getElementById("repoListBox").innerHTML = `
+         <div class="repo-row">
+             <div class="repo-name"><a href="https://github.com/chaosjacker" target="_blank">chaosjacker.github.io</a></div>
+             <div>JavaScript</div>
+             <div>⭐2</div>
+             <div>2026-09-24</div>
+         </div>`;
+     }
+ }
+ autoFetchGithubData();
+ </script>
+ </body>
+ </html>
         
