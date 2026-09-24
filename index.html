@@ -21,7 +21,6 @@ body{
     max-width:1080px;
     margin:0 auto;
 }
-/* 顶部用户卡片 */
 .top-card{
     background:#ffffffdd;
     backdrop-filter:blur(8px);
@@ -40,34 +39,22 @@ body{
     padding:0 24px 20px;
     position:relative;
 }
-
-/* 头像外层包裹，用于光晕 */
 .avatar-wrap{
     position: relative;
     display: inline-block;
 }
-
 .avatar-wrap::before{
     content: "";
     position: absolute;
     inset: -10px;
     border-radius: 50%;
-    background: conic-gradient(
-        from 0deg,
-        #ff6ad5,
-        #a78bfa,
-        #4facfe,
-        #43e97b,
-        #ffd86b,
-        #ff6ad5
-    );
+    background: conic-gradient(from 0deg, #ff6ad5, #a78bfa, #4facfe, #43e97b, #ffd86b, #ff6ad5);
     z-index: -1;
     filter: blur(12px);
     opacity: 0;
     transition: opacity 0.3s ease;
     animation: rotateGlow 6s linear infinite;
 }
-
 .avatar{
     width:110px;
     height:110px;
@@ -81,21 +68,14 @@ body{
     position: relative;
     z-index: 2;
 }
-
-/* hover 悬浮效果：光晕+抖动放大 */
 .avatar-wrap:hover .avatar{
     animation: shake 0.5s ease-in-out;
-    box-shadow:
-        0 0 20px rgba(255, 105, 210, 0.8),
-        0 0 40px rgba(167, 139, 250, 0.6),
-        0 0 60px rgba(79, 172, 254, 0.4);
+    box-shadow: 0 0 20px rgba(255,105,210,0.8), 0 0 40px rgba(167,139,250,0.6), 0 0 60px rgba(79,172,254,0.4);
     transform: scale(1.08) rotate(3deg);
 }
-
 .avatar-wrap:hover::before{
     opacity: 0.9;
 }
-
 @keyframes shake {
     0% { transform: scale(1.08) rotate(0deg); }
     20% { transform: scale(1.08) rotate(-10deg); }
@@ -104,12 +84,10 @@ body{
     80% { transform: scale(1.08) rotate(6deg); }
     100% { transform: scale(1.08) rotate(0deg); }
 }
-
 @keyframes rotateGlow {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
-
 .username{
     margin-top:10px;
     font-size:22px;
@@ -133,7 +111,6 @@ body{
     border-radius:999px;
     font-size:13px;
 }
-/* 三栏卡片容器 */
 .row-3{
     display:grid;
     grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
@@ -163,7 +140,6 @@ body{
     color:#777;
     margin-top:4px;
 }
-/* 语言进度条 */
 .lang-wrap{
     width:100%;
     height:10px;
@@ -183,7 +159,6 @@ body{
     font-size:13px;
     color:#555;
 }
-/* 仓库列表卡片 */
 .repo-card{
     background:#ffffffdd;
     backdrop-filter:blur(8px);
@@ -233,7 +208,7 @@ body{
             <img class="avatar" src="AI_1787483789040.png" alt="头像">
         </div>
         <div class="username">chaosjacker</div>
-        <div class="bio" id="bio">加载简介...</div>
+        <div class="bio" id="bio">ACG爱好者 | 前端摸鱼中</div>
         <div class="tag-group">
             <span class="tag">前端</span>
             <span class="tag">GitHub</span>
@@ -244,4 +219,10 @@ body{
 </div>
 
 <div class="row-3">
-    <div class="stat-car
+    <div class="stat-card">
+        <h3>摸鱼状态</h3>
+        <div class="stat-value" id="lastCommitTime">0时0分0秒</div>
+        <div class="stat-desc">最后一次提交</div>
+    </div>
+    <div class="stat-card">
+        <h3>GitH
