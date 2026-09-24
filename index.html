@@ -33,7 +33,8 @@
     }
     .banner-img {
         width: 100%;
-        height: 340px;
+        height: auto;
+        max-height: 420px;
         object-fit: cover;
         display: block;
         background: linear-gradient(135deg, #e9d8fd, #d6bcfa);
@@ -70,7 +71,6 @@
     /* ===== 头像框（呼吸光晕 + hover 加速） ===== */
     .avatar-frame {
         --breathe-duration: 3s;
-
         width: 116px;
         height: 116px;
         border-radius: 50%;
@@ -85,7 +85,6 @@
         transition: transform 0.35s ease, box-shadow 0.35s ease;
         animation: gradient-flow 6s ease infinite;
     }
-
     .avatar-frame::before,
     .avatar-frame::after {
         content: "";
@@ -95,12 +94,10 @@
         background: linear-gradient(135deg, #a78bfa, #7c3aed, #d8b4fe);
         z-index: -1;
         animation: breathe var(--breathe-duration) ease-in-out infinite;
-        transition: opacity 0.3s ease;
     }
     .avatar-frame::after {
         animation-delay: 1.5s;
     }
-
     .avatar-frame:hover {
         --breathe-duration: 1.1s;
         transform: scale(1.05) rotate(-2deg);
@@ -110,7 +107,6 @@
     .avatar-frame:hover::after {
         animation-name: breathe-strong;
     }
-
     .avatar-img {
         width: 100%;
         height: 100%;
@@ -193,3 +189,4 @@
         height: 100%;
     }
     .lang-legend {
+        display: 
