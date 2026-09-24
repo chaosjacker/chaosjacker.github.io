@@ -40,6 +40,34 @@ body{
     padding:0 24px 20px;
     position:relative;
 }
+
+/* 头像外层包裹，用于光晕 */
+.avatar-wrap{
+    position: relative;
+    display: inline-block;
+}
+
+.avatar-wrap::before{
+    content: "";
+    position: absolute;
+    inset: -10px;
+    border-radius: 50%;
+    background: conic-gradient(
+        from 0deg,
+        #ff6ad5,
+        #a78bfa,
+        #4facfe,
+        #43e97b,
+        #ffd86b,
+        #ff6ad5
+    );
+    z-index: -1;
+    filter: blur(12px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    animation: rotateGlow 6s linear infinite;
+}
+
 .avatar{
     width:110px;
     height:110px;
@@ -48,7 +76,40 @@ body{
     margin-top:-55px;
     object-fit:cover;
     background:#fff;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    z-index: 2;
 }
+
+/* hover 悬浮效果：光晕+抖动放大 */
+.avatar-wrap:hover .avatar{
+    animation: shake 0.5s ease-in-out;
+    box-shadow:
+        0 0 20px rgba(255, 105, 210, 0.8),
+        0 0 40px rgba(167, 139, 250, 0.6),
+        0 0 60px rgba(79, 172, 254, 0.4);
+    transform: scale(1.08) rotate(3deg);
+}
+
+.avatar-wrap:hover::before{
+    opacity: 0.9;
+}
+
+@keyframes shake {
+    0% { transform: scale(1.08) rotate(0deg); }
+    20% { transform: scale(1.08) rotate(-10deg); }
+    40% { transform: scale(1.08) rotate(10deg); }
+    60% { transform: scale(1.08) rotate(-6deg); }
+    80% { transform: scale(1.08) rotate(6deg); }
+    100% { transform: scale(1.08) rotate(0deg); }
+}
+
+@keyframes rotateGlow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
 .username{
     margin-top:10px;
     font-size:22px;
@@ -168,7 +229,9 @@ body{
 <div class="top-card">
     <img class="banner" src="AI_1790003503497.png" alt="横幅">
     <div class="user-info">
-        <img class="avatar" src="AI_1787483789040.png" alt="头像">
+        <div class="avatar-wrap">
+            <img class="avatar" src="AI_1787483789040.png" alt="头像">
+        </div>
         <div class="username">chaosjacker</div>
         <div class="bio" id="bio">加载简介...</div>
         <div class="tag-group">
@@ -181,54 +244,4 @@ body{
 </div>
 
 <div class="row-3">
-    <div class="stat-card">
-        <h3>摸鱼状态</h3>
-        <div class="stat-value" id="lastCommitTime">--</div>
-        <div class="stat-desc">最后一次提交</div>
-    </div>
-    <div class="stat-card">
-        <h3>GitHub概览</h3>
-        <div class="stat-value"><span id="repoNum">0</span> / <span id="starNum">0</span> / <span id="followerNum">0</span></div>
-        <div class="stat-desc">仓库 · Star · 关注者</div>
-    </div>
-    <div class="stat-card">
-        <h3>常用语言</h3>
-        <div class="lang-wrap" id="langBarBox"></div>
-        <div class="lang-label" id="langLabelBox"></div>
-    </div>
-</div>
-
-<div class="repo-card">
-    <h3>仓库动态 <span style="font-size:12px;color:#888">更新于<span id="updateTime"></span></span></h3>
-    <div id="repoListBox"></div>
-</div>
-
-<script>
-const USER = "chaosjacker";
-const langColorMap = {
-    HTML:"#e34c26",
-    CSS:"#563d7c",
-    JavaScript:"#f1e05a",
-    Python:"#3572A5",
-    Rust:"#dea584",
-    C:"#555555",
-    "C++":"#f34b7d",
-    Java:"#b07219"
-};
-let allRepos = [];
-let lastPushDate = null;
-
-// 讀取使用者資訊
-async function getUserInfo(){
-    try{
-        const res = await fetch(`https://api.github.com/users/${USER}`);
-        const data = await res.json();
-        document.getElementById("bio").innerText = data.bio || "暂无个人简介";
-        document.getElementById("followerNum").innerText = data.followers;
-    }catch(err){
-        document.getElementById("bio").innerText = "資料載入失敗";
-    }
-}
-
-// 讀取倉庫列表
-async 
+    <div class="stat-car
