@@ -21,23 +21,15 @@ body{
     max-width:1080px;
     margin:0 auto;
 }
-.top-card{
+/* 顶部用户信息白色卡片 */
+.profile-card{
     background:#ffffffdd;
     backdrop-filter:blur(8px);
     border-radius:20px;
-    overflow:hidden;
+    padding:30px 24px;
     box-shadow:0 2px 12px rgba(0,0,0,0.06);
-    margin-bottom:18px;
-}
-.banner{
-    width:100%;
-    height:320px;
-    object-fit:cover;
-    display:block;
-}
-.user-info{
-    padding:0 24px 20px;
-    position:relative;
+    margin-bottom:16px;
+    text-align:center;
 }
 .avatar-wrap{
     position: relative;
@@ -56,11 +48,10 @@ body{
     animation: rotateGlow 6s linear infinite;
 }
 .avatar{
-    width:110px;
-    height:110px;
+    width:90px;
+    height:90px;
     border-radius:50%;
     border:4px solid #fff;
-    margin-top:-55px;
     object-fit:cover;
     background:#fff;
     cursor: pointer;
@@ -89,31 +80,47 @@ body{
     to { transform: rotate(360deg); }
 }
 .username{
-    margin-top:10px;
+    margin-top:16px;
     font-size:22px;
     font-weight:600;
     color:#222;
 }
 .bio{
     color:#666;
-    margin:6px 0 14px;
+    margin:8px 0 16px;
     font-size:14px;
 }
 .tag-group{
     display:flex;
     flex-wrap:wrap;
     gap:8px;
+    justify-content:flex-start;
+    margin-top:8px;
 }
 .tag{
     background:#fff2bc;
     color:#443300;
-    padding:4px 10px;
+    padding:5px 12px;
     border-radius:999px;
     font-size:13px;
 }
+/* 独立横幅卡片 */
+.banner-card{
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 2px 12px rgba(0,0,0,0.06);
+    margin-bottom:18px;
+}
+.banner{
+    width:100%;
+    height:320px;
+    object-fit:cover;
+    display:block;
+}
+/* 三栏统计卡片 */
 .row-3{
     display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
     gap:16px;
     margin-bottom:18px;
 }
@@ -131,34 +138,66 @@ body{
     font-weight:500;
 }
 .stat-value{
-    font-size:28px;
+    font-size:26px;
     font-weight:700;
-    color:#222;
+    color:#7c3aed;
 }
 .stat-desc{
     font-size:13px;
     color:#777;
-    margin-top:4px;
+    margin-top:6px;
 }
-.lang-wrap{
-    width:100%;
-    height:10px;
-    background:#e9e9f0;
-    border-radius:99px;
+.gh-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:10px;
+    text-align:center;
+    padding:10px 0;
+}
+.gh-grid .num{
+    font-size:20px;
+    font-weight:700;
+    color:#222;
+}
+.gh-grid .label{
+    font-size:12px;
+    color:#777;
+    margin-top:2px;
+}
+.gh-tip{
+    font-size:12px;
+    color:#999;
+    text-align:center;
+    margin-top:8px;
+}
+.lang-row{
     display:flex;
-    overflow:hidden;
-    margin:10px 0 8px;
+    align-items:center;
+    gap:10px;
+    margin:10px 0;
+    font-size:14px;
+}
+.lang-name{
+    width:80px;
+    color:#444;
 }
 .lang-bar{
+    flex:1;
+    height:8px;
+    background:#eee;
+    border-radius:99px;
+    overflow:hidden;
+}
+.lang-fill{
     height:100%;
+    border-radius:99px;
 }
-.lang-label{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-    font-size:13px;
-    color:#555;
+.lang-percent{
+    width:40px;
+    text-align:right;
+    color:#666;
 }
+/* 仓库动态表格 */
 .repo-card{
     background:#ffffffdd;
     backdrop-filter:blur(8px);
@@ -174,55 +213,34 @@ body{
     display:flex;
     justify-content:space-between;
 }
-.repo-item{
-    display:flex;
-    justify-content:space-between;
-    padding:10px 0;
+.repo-table-head{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr 1fr;
+    padding:8px 0;
+    font-size:12px;
+    color:#999;
     border-bottom:1px solid #eee;
 }
-.repo-item:last-child{
+.repo-row{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr 1fr;
+    padding:12px 0;
+    border-bottom:1px solid #f0f0f0;
+    font-size:14px;
+    align-items:center;
+}
+.repo-row:last-child{
     border-bottom:none;
 }
-.repo-left a{
-    font-weight:600;
-    color:#2b6cb0;
+.repo-name a{
+    color:#7c3aed;
     text-decoration:none;
-}
-.repo-left p{
-    font-size:12px;
-    color:#777;
-    margin-top:3px;
-}
-.repo-right{
-    text-align:right;
-    font-size:12px;
-    color:#666;
+    font-weight:500;
 }
 </style>
 </head>
 <body>
-<div class="top-card">
-    <img class="banner" src="AI_1790003503497.png" alt="横幅">
-    <div class="user-info">
-        <div class="avatar-wrap">
-            <img class="avatar" src="AI_1787483789040.png" alt="头像">
-        </div>
-        <div class="username">chaosjacker</div>
-        <div class="bio" id="bio">ACG爱好者 | 前端摸鱼中</div>
-        <div class="tag-group">
-            <span class="tag">前端</span>
-            <span class="tag">GitHub</span>
-            <span class="tag">ACG</span>
-            <span class="tag">JavaScript</span>
-        </div>
-    </div>
-</div>
-
-<div class="row-3">
-    <div class="stat-card">
-        <h3>摸鱼状态</h3>
-        <div class="stat-value" id="lastCommitTime">0时0分0秒</div>
-        <div class="stat-desc">最后一次提交</div>
-    </div>
-    <div class="stat-card">
-        <h3>GitH
+<!-- 顶部用户信息卡片 -->
+<div class="profile-card">
+    <div class="avatar-wrap">
+        
